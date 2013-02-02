@@ -1,3 +1,47 @@
+/*
+ this commonJS module expose a wrapper for calling ACS functions and have a 
+ centralized control over the process.
+ 
+ the cloudify function show a popup with an activity indicator and a lable,
+ query the web service and manage the result
+ 
+ a call look like this snippet
+ 
+ var Cloud = require("lib/cloud");
+ Cloud.cloudify(userCreate); 
+ 
+ where cloudify is the module main function and userCreate the business logic function
+ 
+  	function userCreate( callback) {
+		var Cloud = require('ti.cloud');
+		Cloud.Users.create({
+			email : <fill with your form value>,
+			first_name : <fill with your form value>,
+			last_name : <fill with your form value>,
+			password : <fill with your form value>,
+			password_confirmation : <fill with your form value>
+		}, function(e) {
+
+			callback();
+
+			if (e.success) {
+
+				// do something
+
+
+			} else {
+				alert('Error:\n' + ((e.error && e.message) ));
+
+			}
+
+		});
+	}
+
+ the result is to reduce the amount of code and debugging time and you could concentrate
+ just on the app business logic
+ 
+ * */
+
 exports.cloudify = function(f) {
 	
 	Ti.API.info("cloudify");
@@ -61,7 +105,7 @@ exports.cloudify = function(f) {
 /*
  example of ACS Function call
  
- 	function userCreate(popup, activity, callback) {
+ 	function userCreate(callback) {
 		var Cloud = require('ti.cloud');
 		Cloud.Users.create({
 			email : <fill with your form value>,
